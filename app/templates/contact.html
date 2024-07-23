@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="contact">
+    <div class="contact-info">
+        <h2>Contact Information</h2>
+        <p><strong>Address:</strong> 40100 Main Street, Nairobi city, Lagos city, country (Kenya & Nigeria)</p>
+        <p><strong>Phone:</strong> +254-793653586, & +234-000000000</p>
+        <p><strong>Email:</strong> nouristerjuma@gmail.com</p>
+        <p><strong>Email:</strong> elvisfiador@gmail.com</p>
+    </div>
+    <div class="contact-form">
+        <h2>Contact Form</h2>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" required>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+            <label for="message">Message:</label>
+            <textarea name="message" id="message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
