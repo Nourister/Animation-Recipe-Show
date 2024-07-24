@@ -8,37 +8,37 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/76965a5874.js" crossorigin="anonymous"></script>
-    <title>ANIMATION SHOW</title>
+    <title>Animation-Taste-Show</title>
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <a href="{{ url_for('index') }}" class="logo">Animation-Taste-Show</a>
-        <a href="javascript:void(0);" class="menu-bar">
-            <i class="fas fa-bars"></i>
-        </a>
-        <ul>
-            {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('about') }}">About</a></li>
-                <li><a href="{{ url_for('Recipes') }}">Recipes</a></li>
-                <li><a href="{{ url_for('categories') }}">Categories</a></li>
-                <li><a href="{{ url_for('contact') }}">Contact</a></li>
-            {% else %}
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('about') }}">About</a></li>
-                <li><a href="{{ url_for('recipes_list') }}">Recipes</a></li>
-                <li><a href="{{ url_for('categories') }}">Categories</a></li>
-                <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-            {% endif %}
+    <!-- Main Wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a href="{{ url_for('index') }}" class="logo">Animation-Taste-Show</a>
+            <a href="javascript:void(0);" class="menu-bar">
+                <i class="fas fa-bars"></i>
+            </a>
+            <ul>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('recipes_list') }}">Recipes</a></li>
+                    <li><a href="{{ url_for('categories') }}">Categories</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
 
-        </ul>
-    </nav>
-
-    <!-- Flash Messages (at the top of the page) -->
+            <!-- Flash Messages (at the top of the page) -->
     <div class="container-fluid">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -53,23 +53,21 @@
             {% endif %}
         {% endwith %}
     </div>
-
-    <!-- Main Content -->
-    <div class="content">
-        {% block content %}
-        {% endblock %}
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <h3>Taste Of Anime</h3>
-            <p>Your go-to destination for delicious recipes, cooking tips, and culinary inspiration.</p>
+        <!-- Main Content -->
+         <div class="section">
+            {% block home %}
+            {% endblock %}
         </div>
-    </footer>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+        <!-- Footer -->
+        {% block footer %}
+        {% endblock %}
+    
+
+    <!-- Scripts -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

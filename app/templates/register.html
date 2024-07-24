@@ -1,40 +1,44 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% block title %} Register {% endblock %}
 
 {% block content %}
-<div class="form-container">
-    <h2>Register</h2>
-    <form method="POST">
+<div id="register-form" class="form-auth">
+    <form method="POST" action="">
         {{ form.hidden_tag() }}
-        <div class="form-group">
-            {{ form.username.label }}
-            {{ form.username(class="form-control") }}
+        <h1>Register</h1>
+        <div>
+            {{ form.username.label }} <br />
+            {{ form.username() }}<br />
             {% for error in form.username.errors %}
-                <div class="error">{{ error }}</div>
+            <span class="error-message">[{{ error }}]</span>
             {% endfor %}
         </div>
-        <div class="form-group">
-            {{ form.email.label }}
-            {{ form.email(class="form-control") }}
+        <div>
+            {{ form.email.label }} <br />
+            {{ form.email() }} <br />
             {% for error in form.email.errors %}
-                <div class="error">{{ error }}</div>
+            <span class="error-message">[{{ error }}]</span>
             {% endfor %}
         </div>
-        <div class="form-group">
-            {{ form.password.label }}
-            {{ form.password(class="form-control") }}
-            {% for error in form.password.errors %}
-                <div class="error">{{ error }}</div>
+        <div>
+            {{ form.password1.label }} <br />
+            {{ form.password1() }} <br />
+            {% for error in form.password1.errors %}
+            <span class="error-message">[{{ error }}]</span>
             {% endfor %}
         </div>
-        <div class="form-group">
-            {{ form.confirm_password.label }}
-            {{ form.confirm_password(class="form-control") }}
-            {% for error in form.confirm_password.errors %}
-                <div class="error">{{ error }}</div>
+        <div>
+            {{ form.password2.label }} <br />
+            {{ form.password2() }} <br />
+            {% for error in form.password2.errors %}
+            <span class="error-message">[{{ error }}]</span>
             {% endfor %}
         </div>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-primary") }}
+        <div>{{ form.submit() }}</div>
+        
+        <div class="link">
+            Already Have An Account? <a href="{{ url_for('login') }}">Login</a>
         </div>
     </form>
 </div>

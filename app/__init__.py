@@ -1,7 +1,10 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from app.models import User, Recipe
+
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -11,7 +14,8 @@ def create_app():
     # Create Flask app instance
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'a9d108e0e581ba50aa01bf74aa60c9ac'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///anime_site.db'
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'anime_site.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Initialize extensions with app

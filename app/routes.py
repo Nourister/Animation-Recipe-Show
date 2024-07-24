@@ -109,19 +109,23 @@ def index():
     return render_template("index.html", recipes=recipes)
 
 @app.route("/about")
+@login_required
 def about():
     return render_template("about.html")
 
 @app.route('/recipes')
+@login_required
 def recipes_list():
     recipes_list = Recipe.query.all()
     return render_template('recipes.html', recipes=recipes_list)
 
 @app.route('/categories')
+@login_required
 def categories():
     return render_template('categories.html')
 
 @app.route('/contact', methods=['GET', 'POST'])
+@login_required
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
@@ -132,7 +136,7 @@ def contact():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     
     form = LoginForm()
     if form.validate_on_submit():
@@ -140,7 +144,7 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user)
             flash('Login successful!', 'success')
-            return redirect(url_for('home'))
+            return redirect(url_for('index'))
         else:
             flash('Login failed. Check your email and/or password.', 'danger')
     return render_template('login.html', form=form)
@@ -148,19 +152,34 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = User.hash_password(form.password.data)
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-        flash('Account created successfully! You can now log in.', 'success')
-        return redirect(url_for('login'))
+        existing_user = User.query.filter_by(email=form.email.data).first()
+        if existing_user:
+            flash('This email address is already registered. Please use a different email or log in.', 'danger')
+            return redirect(url_for('register'))  # Redirect back to the registration page or handle the error condition
+        else:
+            new_user = User(username=form.username.data, email=form.email.data)
+            new_user.password = form.password1.data
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Account created successfully!', 'success')
+            # Optionally, perform additional actions after successful registration
+            return redirect(url_for('login'))
+
     return render_template('register.html', form=form)
+    #     hashed_password = User.hash_password(form.password.data)
+    #     user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+    #     db.session.add(user)
+    #     db.session.commit()
+    #     flash('Account created successfully! You can now log in.', 'success')
+    #     return redirect(url_for('login'))
+    # return render_template('register.html', form=form)
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('index'))
